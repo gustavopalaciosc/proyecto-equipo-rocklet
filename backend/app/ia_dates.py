@@ -78,8 +78,6 @@ el dise˜no como para el an´alisis de la complejidad computacional de un algori
     valid_events = [event for event in events if is_event_valid(event)]
     return valid_events
 
-    is_event_valid
-
 
 if __name__ == "__main__":
     from pprint import pprint

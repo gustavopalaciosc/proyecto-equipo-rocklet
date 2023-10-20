@@ -15,19 +15,19 @@ def is_event_valid(event):
 if __name__ == "__main__":
     # Example usage:
     events = [
-        {"date": "2023-08-09", "name": "Clases"},
-        {"date": "2023-08-09", "name": "Objetivos"},
-        {"date": "2023-08-09", "name": "Contenidos"},
-        {"date": "2023-08-24T23:59:00.000Z", "name": "Tarea 1"},
-        {"date": "2023-09-07T23:59:00.000Z", "name": "Tarea 2"},
-        {"date": "2023-10-19T23:59:00.000Z", "name": "Tarea 4"},
-        {"date": "2023-10-26T23:59:00.000Z", "name": "Tarea 4"},
-        {"date": "2023-11-23T23:59:00.000Z", "name": "Tarea 5"},
-        {"date": "2023-11-30T23:59:00.000Z", "name": "Tarea 6"},
-        {"date": "2023-09-20T12:00:00.000Z", "name": "Interrogación 1"},
-        {"date": "2023-11-06T12:00:00.000Z", "name": "Interrogación 2"},
-        {"date": "2023-12-13T12:00:00.000Z", "name": "Examen"},
+        {"date": "", "name": "Presentación del curso"},
+        {"date": "", "name": "Objetivos de aprendizaje"},
+        {"date": "", "name": "Introducción"},
+        {"date": "", "name": "Fundamentos"},
+        {"date": "", "name": "Pruebas dentro el ciclo de desarrollo de software"},
+        {"date": "", "name": "Técnicas de Pruebas"},
+        {"date": "", "name": "Planificación, Diseño y Seguimiento de Plan de Pruebas"},
+        {"date": "2023-09-08T20:30:00.000Z", "name": "Interrogaciones"},
+        {"date": "2023-09-08T20:30:00.000Z", "name": "Actividades"},
+        {"date": "2023-09-22T20:30:00.000Z", "name": "Interrogación 1"},
+        {"date": "2023-10-25T20:30:00.000Z", "name": "Interrogación 2"},
+        {"date": "2023-12-04T20:30:00.000Z", "name": "Recuperativo"},
     ]
 
-    for event in events:
-        print(is_event_valid(event))
+    valid_events = [event for event in events if is_event_valid(event)]
+    print(valid_events)
