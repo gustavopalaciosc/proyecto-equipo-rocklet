@@ -1,6 +1,7 @@
 fastapi
 pydantic
-uvicorn
+uvicorn[standard]
 python-multipart
 openai
 pypdf
+python-dateutil

@@ -1,60 +1,84 @@
 import openai
 import json
+from app.chunks import generate_chunks
+from app.event_validator import is_event_valid
+from dotenv import load_dotenv
+import os
 
-openai.api_key = "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"
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def get_dates(text):
-    text = text[300 : min(3300, len(text))]
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a software that only returns output",
-            },
-            {
-                "role": "system",
-                "content": """Parse the following text and return all the names of events with its dates in a JSON format {name: <name>, date:<date:ISO8601>}""",
-            },
-            {
-                "role": "user",
-                "content": """La condici´ on de aprobaci´ on es NF≥3,95.
+def get_events(text):
+    def get_events_from_chunk(text):
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a software that only returns output",
+                },
+                {
+                    "role": "system",
+                    "content": """Parse the following text and return all the names of events with its dates in a JSON format {name: <name>, date:<date:ISO8601>}""",
+                },
+                {
+                    "role": "user",
+                    "content": """La condici´ on de aprobaci´ on es NF≥3,95.
 Las fechas de las interrogaciones y el examen son las siguientes:
 I1 : viernes 8 de septiembre a las 17:30 hrs
 I2 : viernes 3 de noviembre a las 17:30 hrs
 Examen : jueves 7 de diciembre a las 08:20 hrs
 Las fechas de publicaci´ on del enunciado y entrega de las tareas aparecen en la siguiente tabla:""",
-            },
-            {
-                "role": "assistant",
-                "content": """[{"name": "I1", "date": "2023-09-08T20:30:00.000Z"}, {"name": "I2", "date": "2023-11-03T20:30:00.000Z"}, {"name": "Examen", "date": "2023-12-07T11:20:00.000Z"}]""",
-            },
-            {
-                "role": "user",
-                "content": """Evaluaciones.
+                },
+                {
+                    "role": "assistant",
+                    "content": """[{"name": "I1", "date": "2023-09-08T20:30:00.000Z"}, {"name": "I2", "date": "2023-11-03T20:30:00.000Z"}, {"name": "Examen", "date": "2023-12-07T11:20:00.000Z"}]""",
+                },
+                {
+                    "role": "user",
+                    "content": """Evaluaciones.
 Prueba 1: Jueves 25 de Mayo, 14:00 - 15:20. 25%
 Examen : Martes 4 de Julio, 08:30 - 10:30. 25%
 Realizaremos dos pruebas durante el semestre""",
-            },
-            {
-                "role": "assistant",
-                "content": """[{"name": "Prueba 1", "date": "2023-05-25T18:00:00.000Z"}, {"name": "Examen", "date": "2023-07-04T12:30:00.000Z'"}]""",
-            },
-            {
-                "role": "user",
-                "content": text,
-            },
-        ],
-    )
+                },
+                {
+                    "role": "assistant",
+                    "content": """[{"name": "Prueba 1", "date": "2023-05-25T18:00:00.000Z"}, {"name": "Examen", "date": "2023-07-04T12:30:00.000Z"}]""",
+                },
+                {
+                    "role": "user",
+                    "content": """El objetivo del curso es introducir al alumno a las t´ecnica b´asicas y algunas t´ecnicas avanzadas tanto para
+el dise˜no como para el an´alisis de la complejidad computacional de un algoritmo""",
+                },
+                {
+                    "role": "assistant",
+                    "content": """[]""",
+                },
+                {
+                    "role": "user",
+                    "content": text,
+                },
+            ],
+        )
+        try:
+            json_text = response["choices"][0]["message"]["content"]
+            data = json.loads(json_text)
+            return data
+        except:
+            print(response)
+            raise Exception("The IA module could not decode the events")
 
-    try:
-        json_text = response["choices"][0]["message"]["content"]
-        data = json.loads(json_text)
-        return data
-    except:
-        print(response)
-        raise Exception("The IA module could not decode the events")
+    chunks = generate_chunks(text)
+
+    events = []
+    for chunk in chunks:
+        events.extend(get_events_from_chunk(chunk))
+
+    valid_events = [event for event in events if is_event_valid(event)]
+    return valid_events
+
+    is_event_valid
 
 
 if __name__ == "__main__":
@@ -164,5 +188,5 @@ if __name__ == "__main__":
 # 6. Michael Mitzenmacher y Eli Upfal. Probability and Computing: Randomized Algorithms and Probabi-
 # listic Analysis . Cambridge University Press, 2005."""
 
-    dates = get_dates(query)
+    dates = get_events(query)
     pprint(dates)

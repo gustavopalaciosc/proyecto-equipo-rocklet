@@ -2,7 +2,7 @@ from typing import Union
 
 from pypdf import PdfReader
 from fastapi import FastAPI, File, UploadFile
-from app.ia_dates import get_dates
+from app.ia_dates import get_events
 
 app = FastAPI()
 
@@ -26,6 +26,6 @@ def create_upload_file(file: UploadFile):
         text = page.extract_text()
         total_text += text + "\n"
 
-    dates = get_dates(total_text)
+    dates = get_events(total_text)
 
     return dates
