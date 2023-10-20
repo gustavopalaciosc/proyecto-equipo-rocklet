@@ -2,6 +2,7 @@ from typing import Union
 
 from pypdf import PdfReader
 from fastapi import FastAPI, File, UploadFile
+from app.ia_dates import get_dates
 
 app = FastAPI()
 
@@ -16,17 +17,15 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 
-import os
-
-
 @app.post("/get_dates/")
 def create_upload_file(file: UploadFile):
     reader = PdfReader(file.file)
+
+    total_text = ""
     for page in reader.pages:
         text = page.extract_text()
-        print(text)
-    # with open("sample.pdf", "rb") as temp_file:
+        total_text += text + "\n"
 
-    # content = file.file.readlines()
-    # print(content)
-    return {"filename": file.filename}
+    dates = get_dates(total_text)
+
+    return dates
