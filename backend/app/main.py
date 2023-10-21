@@ -83,4 +83,7 @@ def create_upload_file(file: UploadFile):
 
     events = get_events(total_text)
 
+    for i, event in enumerate(events):
+        event["id"] = i
+
     return events
