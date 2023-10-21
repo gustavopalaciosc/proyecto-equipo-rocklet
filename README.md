@@ -95,6 +95,7 @@ El flujo consiste en lo siguiente
 - [ ] Fijar Nombre del Ramo en los eventos creados
 - [ ] Permitir subir multiples programas de distintos ramos de una sola vez
 - [ ] Permitir la edición de fechas autogeneradas para corregir fechas incorrectas
+- [ ] Permitir agregrar evaluaciones con sus fechas en caso de que falten
 - [ ] Dar una interfaz visual que permita visualizar el programa del curso para poder validar más facilmente las fechas autogeneradas.
 
 ## Tecnologías utilizadas:
