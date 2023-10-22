@@ -20,7 +20,7 @@ def get_events(text):
                 },
                 {
                     "role": "system",
-                    "content": """Parse the following text and return all the names of events with its dates in a JSON format {name: <name>, date:<date:ISO8601>}""",
+                    "content": """Parse the following text and return all the names of events with its dates in a JSON format {name: <name>, date:<date:ISO8601>}. Events without a date or that do not correspond to an evaluation, shall be discarded""",
                 },
                 {
                     "role": "user",
@@ -63,6 +63,7 @@ el dise˜no como para el an´alisis de la complejidad computacional de un algori
         )
         try:
             json_text = response["choices"][0]["message"]["content"]
+            print(json_text)
             data = json.loads(json_text)
             return data
         except:
@@ -198,7 +199,7 @@ Contenidos
         return data
     except:
         print(response)
-        raise Exception("The IA module could not decode the events")
+        raise Exception("The IA module could not decode the course name")
 
 
 if __name__ == "__main__":
