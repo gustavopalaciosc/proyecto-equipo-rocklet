@@ -4,7 +4,7 @@ from pypdf import PdfReader
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.ia_dates import get_events
+from app.ia_dates import get_events, get_course_name
 from app.events_to_calendar import create_ics_file
 import uuid
 
@@ -76,6 +76,8 @@ def create_upload_file(file: UploadFile):
     """
     reader = PdfReader(file.file)
 
+    course_name = get_course_name(reader.pages[0].extract_text())[0]
+
     total_text = ""
     for page in reader.pages:
         text = page.extract_text()
@@ -85,5 +87,6 @@ def create_upload_file(file: UploadFile):
 
     for i, event in enumerate(events):
         event["id"] = i
+        event["name"] += f" {course_name}"
 
     return events

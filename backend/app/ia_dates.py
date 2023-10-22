@@ -53,7 +53,7 @@ el dise˜no como para el an´alisis de la complejidad computacional de un algori
                 },
                 {
                     "role": "assistant",
-                    "content": """[]""",
+                    "content": """[""]""",
                 },
                 {
                     "role": "user",
@@ -77,6 +77,128 @@ el dise˜no como para el an´alisis de la complejidad computacional de un algori
 
     valid_events = [event for event in events if is_event_valid(event)]
     return valid_events
+
+# Funcion que retorna el nombre del ramo
+def get_course_name(text):
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a software that only returns output",
+                 },
+                 {
+                     "role": "system",
+                     "content": "Parse the following syllabus and return the name of the course"
+                },
+                {
+                    "role": "user",
+                    "content": """Pontificia Universidad Católica de Chile
+Escuela de Administración
+EAA325B OPCIONES Y FUTUROS
+PROGRAMA CURSO1
+Segundo Semestre 2023 Profesor: David Buchuk (dbuchuk@uc.cl)
+(Oficina #411 – Escuela de Administración)
+Cátedras: L-W:3 (Sala C504)
+Ayudantías: L:2 (Sala AE003) Ayudantes: Gonzalo Lanis (gonzalo.lanis@uc.cl)
+Oscar Herrera (olherrera@uc.cl)
+1. Objetivos del Curso
+Al finalizar este curso el alumno debiera conocer las características y potenciales usos de los
+principales derivados financieros (futuros, forwards, opciones y swaps) y herramientas de administración
+de riesgos financieros. El énfasis estará en la valoración de estos instrumentos y en el
+análisis de estrategias para la administración de riesgos desde el punto de vista de una corporación
+o una institución financiera.
+2. Clases, Ayudantías y Atención de Alumnos
+Clases son en formato presencial los días lunes y miércoles en el módulo 3 (11:00 a 12:10) en
+la sala C504.
+Las ayudantías son los días lunes en el módulo 2 (9:40 a 10:50) en la sala AE003.
+Atención de alumnos es los días miércoles de 14:00 a 17:00 a través de zoom o presencial
+agendando con antelación.
+Preguntas que sean de interés de todo el curso deben ser hechas en el foro del curso en Canvas.
+El profesor se reserva el derecho de postear en el foro este tipo de preguntas hechas por correo
+electrónico.
+3. Pre"""
+                },
+                {
+                    "role": "assistant",
+                    "content": """["Opciones y futuros"]"""
+                },
+                {
+                    "role": "user",
+                    "content": """Pontificia Universidad Cat´olica de Chile
+Facultad de Econom´ıa y Administraci´on
+Instituto de Econom´ıa
+Macroeconometria Aplicada
+EAE3102
+Primer Semestre 2023
+Informaci´on del Curso
+Profesores: Javier Tur´en (jturen@uc.cl)
+Ayudantes: Francisca Kegevic (fkegevic@uc.cl) y ...
+Clases: Lunes y Mi´ercoles (CS201), m´odulo 2 (10:00 a 11:20).
+Ayudant´ıas: Lunes (AE102), m´odulo 5 (15:30 a 16:50).
+Atenci´on de alumnos: Fijar d´ıa y hora por email.
+Descripci´on del Curso
+Este curso cubrir´a conceptos y t´ecnicas de econometr´ıa avanzada de series de tiempo, intentando
+seguir siempre un enfoque aplicado. En la primera parte del curso, se revisar´a en profundidad
+t´ecnicas econom´etricas avanzadas de modelos de series de tiempo univariadas, predicci´on, ciclos
+econ´omicos y filtros. La segunda parte, se enfocar´a en modelos multivariados y en modelos frecuentemente
+utilizados por la literatura como por ejemplo Local Projection Models o VARs. El
+objetivo del curso es que el alumno se familiarice con macroeconometr´ıa avanzada, siguiendo un
+enfoque m´as pr´actico. La materia se complementar´a con an´alisis y discusi´on de papers, intentando
+replicar algunos resultados cuando sea posible. Se asumir´a que el alumno ya posee conocimientos
+b´asicos de Stata.
+Contenidos
+1."""
+                },
+                {
+                    "role": "assistant",
+                    "content": """["Macroeconometria aplicada"]"""
+                },
+                {
+                    "role": "user",
+                    "content": """# Plataforma de apoyo : Canvas, https://github.com/darroyue/IIC2283
+# Objetivo
+# El objetivo del curso es introducir al alumno a las t´ ecnica b´ asicas y algunas t´ ecnicas avanzadas tanto para
+# el dise˜ no como para el an´ alisis de la complejidad computacional de un algoritmo. Se dar´ a especial ´ enfasis a
+# la comprensi´ on del modelo computacional sobre el cual se dise˜ na y analiza un algoritmo. Adem´ as, para cada
+# una de las t´ ecnicas mostradas se estudiar´ a algunos algoritmos que permiten entender su potencial, poniendo
+# ´ enfasis en la variedad e importancia de las ´ areas donde estos algoritmos son utilizados.
+# Evaluaci´ on
+# La evaluaci´ on del curso estar´ a basada en dos interrogaciones, un examen y tres tareas. Las interrogaciones
+# y el examen estar´ an orientadas a medir los conceptos fundamentales ense˜ nados en el curso. En las tareas,
+# los alumnos programaran en Python algoritmos para resolver distintos tipos de problemas, donde ser´ an
+# utilizadas las t´ ecnicas aprendidas en el curso.
+# Suponiendo que las notas en las interrogaciones son I1eI2, la nota del examen es E, y las notas en las tareas
+# 1
+# sonT1,T2yT3, la nota final del curso se calcula de la siguiente forma:
+# NF =1
+# 2·T1+T2+T3
+# 3
+# +1
+# 2·I1+I2+E
+# 3
+# .
+# La condici´ on de aprobaci´ on es NF≥3,95.
+# Las fechas de las interrogaciones y el examen son las siguientes:
+# I1 : viernes 8 de septiembre a las 17"""
+                },
+                {
+                    "role": "assistant",
+                    "content": "[]"
+                },
+                {
+                    "role": "user",
+                    "content": text
+                }
+            ]
+    )
+    try:
+        json_text = response["choices"][0]["message"]["content"]
+        data = json.loads(json_text)
+        return data
+    except:
+        print(response)
+        raise Exception("The IA module could not decode the events")
 
 
 if __name__ == "__main__":
