@@ -67,7 +67,7 @@ function App() {
 
   return (
     <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
-      <h1>Calendarizador</h1>
+      <h1>Calendarizador Programas UC</h1>
       <h2>Crea tu calendario en 3 simples pasos!</h2>
       <div style={{maxWidth:"23em"}}>
         <ol>
@@ -76,7 +76,7 @@ function App() {
           <li>Genera y descarga el archivo generado (.ics) agregalo a tu calendario!</li>
         </ol>
       </div>
-      
+          
       
       <div style={{display: 'flex', flexDirection: "column", alignItems: "center", rowGap: "1em"}}>
         <input type="file" onChange={handleFileChange} />
